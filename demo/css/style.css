@@ -1,0 +1,228 @@
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+body {
+    font-family: '微軟正黑體', sans-serif;
+    font-weight: 300;
+    line-height: 1.42em;
+    color: #A7A1AE;
+    background-color: #1F2739;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+h1 {
+    font-size: 3em;
+    font-weight: 300;
+    line-height: 1em;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    color: #4DC3FA;
+}
+
+h2 {
+    font-size: 1em;
+    font-weight: 300;
+    text-align: center;
+    display: block;
+    line-height: 1em;
+    padding-bottom: 2em;
+    color: #FB667A;
+}
+
+h2 a {
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #FB667A;
+    text-decoration: none;
+}
+
+#root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.sensor {
+    background-color: #007799;
+}
+
+.image {
+    background-color: #237124;
+}
+
+.multi {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.sensor.image {
+    background-color: #125056;
+}
+
+.sensor.multi {
+    background-color: #752020;
+}
+
+.image.multi {
+    background-color: #752020;
+}
+
+.sensor.image.multi {
+    background-color: #dc2c2c;
+}
+
+.blue {
+    color: #185875;
+}
+
+.yellow {
+    color: #FFF842;
+}
+
+.container {
+    overflow: hidden;
+    display: table;
+}
+
+.container td,
+.container th {
+    padding: 0.5em 1em;
+}
+
+.container tr:nth-child(odd) {
+    background-color: #323C50;
+}
+
+.container tr:nth-child(even) {
+    background-color: #2C3446;
+}
+
+.container th {
+    background-color: #1F2739;
+}
+
+.container th h1 {
+    font-weight: bold;
+    font-size: 1em;
+    text-align: center;
+    color: #185875;
+}
+
+.container a {
+    color: #FFF8DC;
+    font-size: 50px;
+}
+
+.container td {
+    font-size: 40px;
+    font-weight: normal;
+    font-size: 1em;
+    text-align: center;
+    box-shadow: 0 2px 2px -2px #0E1119;
+    position: relative;
+}
+
+.container img {
+    border: 0px solid #ddd;
+    border-radius: 8px;
+}
+
+.container td>div {
+    display: flex;
+}
+
+.container td div a {
+    display: block;
+    text-align: center;
+    width: 1.2em;
+    margin-right: 1rem;
+}
+
+.container td div a .name {
+    font-size: 0.5em;
+}
+
+.container td div img.teeth {
+    width: 18em;
+    align-self: flex-start;
+    transition: opacity .2s;
+}
+
+.container td div.hand {
+    font-size: 23px;
+}
+
+.container td div .middle {
+    transition: opacity .2s;
+    opacity: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+}
+
+.container td div .middle .text {
+    color: white;
+    font-size: 32px;
+    padding: 16px 100px;
+    left: 0;
+    white-space: nowrap;
+}
+
+.container td div section {
+    position: relative;
+    overflow: hidden;
+}
+
+.container td:hover div section .middle {
+    opacity: 1;
+}
+
+.container td:hover div section img {
+    opacity: 0.5;
+}
+
+.ggininder {
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-top: 0.5em;
+    border-radius: 4px;
+    width: 100%;
+    color: white;
+    padding: 0.4em 0.5em;
+    white-space: nowrap;
+    border: none;
+    background-color: rgb(32, 77, 151);
+    box-shadow: 0px 3px 0px 3px rgb(27, 66, 128);
+    position: relative;
+}
+
+.ggininder.active {
+    color: transparent;
+}
+
+.ggininder.active:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+    width: 1em;
+    height: 1em;
+    border: 2px solid white;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: rotate 800ms linear infinite;
+}
+
+@keyframes rotate {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
