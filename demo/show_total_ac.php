@@ -1,7 +1,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <header>
-    <title>Statistics</title>
+    <title>Total Accuracy</title>
     <link rel="icon" type="image/png" href="favicon.png" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <script src="js/Chart.js"></script>
@@ -42,13 +42,17 @@
 </header>
 
 <body>
-    <!--Header Bar-->
-    <?php include_once("header_bar.php"); ?>
     <script>
 <?php
+function avgAcu($a){
+    return $a = $a/16 * 100;
+}
     $ac_M = array_fill(0, 16, 0);
     $ac_I = array_fill(0, 16, 0);
     $ac_S = array_fill(0, 16, 0);
+    $ac_M_sum = 0;
+    $ac_I_sum = 0;
+    $ac_S_sum = 0;
     for($i=0; $i<16; $i++){
         $f = fopen("output/total/total".$i.".txt", "r") or die("Unable to open file!");
         $json="";
@@ -61,27 +65,36 @@
             $ac_M[$i] = 0;
         }else{
             $ac_M[$i] = $data->countMulti[$i] / array_sum($data->countMulti);
+            $ac_M_sum += $ac_M[$i];
         }
         if(array_sum($data->countImage)==0){
             $ac_I[$i] = 0;
         }else{
             $ac_I[$i] = $data->countImage[$i] / array_sum($data->countImage);
+            $ac_I_sum += $ac_I[$i];
         }
         if(array_sum($data->countSensor)==0){
             $ac_S[$i] = 0;
         }else{
             $ac_S[$i] = $data->countSensor[$i] / array_sum($data->countSensor);
+            $ac_S_sum += $ac_S[$i];
         }
 
         fclose($f);
     }
+    $ac_M_sum = avgAcu($ac_M_sum);
+    $ac_I_sum = avgAcu($ac_I_sum);
+    $ac_S_sum = avgAcu($ac_S_sum);
+
     $ac_M = json_encode($ac_M);
     $ac_I = json_encode($ac_I);
     $ac_S = json_encode($ac_S);
     echo "\t\tlet ac_M=$ac_M\n";
     echo "\t\tlet ac_I=$ac_I\n";
     echo "\t\tlet ac_S=$ac_S\n";
-    
+    echo "\t\tlet ac_M_sum=$ac_M_sum\n";
+    echo "\t\tlet ac_I_sum=$ac_I_sum\n";
+    echo "\t\tlet ac_S_sum=$ac_S_sum\n";
 
 ?>
         let names = [
@@ -103,8 +116,12 @@
             "16  右下咬合面"
         ]
 
-
-		document.write(`
+        document.write(`
+		<h2 style="display:flex;justify-content:space-around">
+            <div>Multi: ${ac_M_sum.toFixed(2)}%</div>
+            <div>Image: ${ac_I_sum.toFixed(2)}%</div>
+            <div>Sensor: ${ac_S_sum.toFixed(2)}%</div>
+        </h2>
 		<div class="chart">
 			<canvas id="myChart"></canvas>`
 		)

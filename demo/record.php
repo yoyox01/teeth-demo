@@ -9,7 +9,7 @@
 	fclose($f1);
 	
 	$data_de = json_decode($data);
-	$f2 = fopen("output/records/t".$data_de->recordId."_".date("YmdHis")."txt","w")or die("Unable to open file2!");
+	$f2 = fopen("output/records/t".$data_de->recordId."_".date("YmdHis").".txt","w")or die("Unable to open file2!");
 	
 	fwrite($f2,$data);
 	fflush($f2);

@@ -65,6 +65,10 @@
         let countMulti
         let countImage
         let countSensor
+        let fetchMulti = ["./random.php",500]
+        let fetchImage = ["./random.php",500]
+        let fetchSensor = ["./random.php",500]
+        let start_pause_flag = 0
 
         let teeth = [{
             id: 1,
@@ -168,7 +172,7 @@
         let interval1
         let interval2
         let interval3
-
+        
         const start = async() => {
             tds.forEach(td => td.classList.add("multi"))
             await delay(1000)
@@ -181,7 +185,7 @@
             tds.forEach(td => td.classList.remove("sensor"))
                         
             interval1 = setInterval(() => {
-                fetch('./random.php') // './output/res_multi.txt'
+                fetch(fetchMulti[0]) // './output/res_multi.txt'
                     .then(res => res.text())
                     .then(i => {
                         tds.forEach(td => td.classList.remove("multi"))
@@ -190,9 +194,9 @@
                             countMulti[i - 1] += 1
                         }
                     })
-            }, 500)
+            }, fetchMulti[1])
             interval2 = setInterval(() => {
-                fetch('./random.php') // './output/res_image.txt'
+                fetch(fetchImage[0]) // './output/res_image.txt'
                     .then(res => res.text())
                     .then(i => {
                         tds.forEach(td => td.classList.remove("image"))
@@ -201,9 +205,9 @@
                             countImage[i - 1] += 1
                         }
                     })
-            }, 500)
+            }, fetchImage[1])
             interval3 = setInterval(() => {
-                fetch('./random.php')   // './output/res_sensor.txt'
+                fetch(fetchSensor[0])   // './output/res_sensor.txt'
                     .then(res => res.text())
                     .then(i => {
                         tds.forEach(td => td.classList.remove("sensor"))
@@ -212,17 +216,42 @@
                             countSensor[i - 1] += 1
                         }
                     })
-            }, 500)
+            }, fetchSensor[1])
         }
 
         start()
 
         function add(a, b) {
-            return a + b;
+            return a + b
         }
-
         function acu(a, b) {
-            return a / b.reduce(add, 0) * 100;
+            return a / b.reduce(add, 0) * 100
+        }
+        function delComfirm() {
+            if(confirm("Are you sure to initialize the total record data?")){
+                fetch("output/total/init.php")
+            }else{
+                //alert("No");
+            }
+        }
+        function startPause(){
+            if (!start_pause_flag){
+                fetchMulti[0] = "./output/res_multi.txt"
+                fetchImage[0] = "./output/res_image.txt"
+                fetchSensor[0] = "./output/res_sensor.txt"
+                fetchMulti[1] = 500
+                fetchImage[1] = 500
+                fetchSensor[1] = 500
+                start_pause_flag = 1
+            }else{
+                fetchMulti[0] = "./random.php"
+                fetchImage[0] = "./random.php"
+                fetchSensor[0] = "./random.php"
+                fetchMulti[1] = 500
+                fetchImage[1] = 500
+                fetchSensor[1] = 500
+                start_pause_flag = 0
+            }
         }
         const toggleTest = id => {
             if (recordId == undefined) { //start of Trace button
@@ -231,6 +260,8 @@
                 countImage = replicate(16, 0)
                 countSensor = replicate(16, 0)
                 targets[id].classList.add("active");
+                
+                fetch(`../uploads/currentPos.php?id=${id}`)
             } else if (id == recordId) { //end of Trace button
                 targets[id].classList.remove("active");
 
@@ -245,12 +276,13 @@
                 console.log("Multi-model = " + accuracy_M.toFixed(2) + "% !")
                 console.log("Image-model = " + accuracy_I.toFixed(2) + "% !")
                 console.log("Sensor-model = " + accuracy_S.toFixed(2) + "% !")
-
+                
                 // let body = countMulti.map(d => `resultMIS[]=${d}`).join("&")
                 // 		+ "&" + countImage.map(d => `resultMIS[]=${d}`).join("&")
                 // 		+ "&" + countSensor.map(d => `resultMIS[]=${d}`).join("&")
                 //         + `&resultMIS[]=${id}`
-
+                
+                fetch("../uploads/currentPos.php?id=87")
                 let body = `data=${encodeURI(JSON.stringify({recordId,countMulti,countImage,countSensor}))}`
                 recordId = undefined;
                 fetch("record.php", {

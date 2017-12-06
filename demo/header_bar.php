@@ -8,7 +8,7 @@
                     <a href="index.php" id="ch_font">
                         <div>
                             <img src="icon/tooth_white.svg" class="icon"></img>
-                            <span><i class="fa fa-fw fa-home" ></i> 基於深度學習智慧刷牙動作辨識</span>
+                            <span><i class="fa fa-fw fa-home" ></i> 智慧刷牙辨識學習系統</span>
                         </div>
                     </a>
                 </li>
@@ -23,12 +23,12 @@
                         <li class="has-sub"><a href="show.php" target="_blank"><span>Current Result</span></a>
                             
                         </li>
-                        <li class="has-sub"><a href="show_total_ac.php"><span>Total Result</span></a>
+                        <li class="has-sub"><a href="show_total_ac.php" target="_blank"><span>Total Result</span></a>
                             <ul>
                             <script>
                                 for(let i=0; i<16; i++){
                                     document.write(`
-                                    <li><a href="show_total.php?totalId=${i}" target="_blank"><span>Menu ${i+1}</span></a></li>
+                                    <li><a href="show_total.php?totalId=${i}" target="_blank"><span>Result ${i+1}</span></a></li>
                                     `)
                                 }
                             </script>
@@ -36,24 +36,18 @@
                         </li>
                     </ul>
                 </li>
-                <li><a>
+                <li class="has-sub"><a href="#" onclick="delComfirm()">
                     <div>
                         <img src="icon/init.svg" class="icon"></img>
-                        <script>
-                        function delComfirm() {
-                            if(confirm("Are you sure to initialize the total record data?")){
-                                fetch("output/total/init.php")
-                            }else{
-                                //alert("No");
-                            }
-                        }
-                        </script>
-                        <span onclick="delComfirm()"><i class="fa fa-fw fa-cog"></i>Initial Data</span>
+                        <span><i class="fa fa-fw fa-cog"></i>Initial Data</span>
                     </div>
-                </a></li>   
-                <!--
-                <li><a href=""><span><i class="fa fa-fw fa-phone"></i> Contact</span></a></li>
-                -->
+                </a></li>
+                <li class="has-sub"><a href="#" onclick="startPause()">
+                    <div>
+                        <img src="icon/play.svg" class="icon"></img>
+                        <span><i class="fa fa-fw fa-phone"></i>Start/Pause</span>
+                    </div>
+                </a></li>
             </ul>
         </div>
     </div>

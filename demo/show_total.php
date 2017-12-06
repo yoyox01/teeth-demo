@@ -42,8 +42,6 @@
 </header>
 
 <body>
-    <!--Header Bar-->
-    <?php include_once("header_bar.php"); ?>
     <script>
         function add(a, b) {
             return a + b;
@@ -53,7 +51,6 @@
             return a / b.reduce(add, 0) * 100;
         }
 <?php
-    print_r($_GET);
     $totalId = $_GET["totalId"];
 
     $f1 = fopen("output/total/total".$totalId.".txt", "r") or die("Unable to open file!");
